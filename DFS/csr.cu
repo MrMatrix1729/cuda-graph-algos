@@ -21,7 +21,7 @@ __global__ void dfs(int *row_ptr, int *col_ind, int *visited, int *stack, int *s
 }
 
 
-void computeDFS(int *h_row_ptr, int *h_col_ind, int *h_adj_list, int *h_offset, int num_nodes, bool use_csr) {
+void computeDFS(int *h_row_ptr, int *h_col_ind, int *h_adj_list, int *h_offset, int num_nodes) {
     int *d_row_ptr, *d_col_ind, *d_adj_list, *d_offset, *d_visited, *d_stack, *d_stack_size;
     int h_stack_size = 0;
     int h_visited[num_nodes] = {0};
@@ -62,7 +62,7 @@ int main() {
     int h_adj_list[] = {1, 4, 0, 2, 4, 1, 3, 2, 4, 3};
     int h_offset[] = {0, 2, 5, 7, 9, 10};
     
-    computeDFS(h_row_ptr, h_col_ind, h_adj_list, h_offset, num_nodes, true);
+    computeDFS(h_row_ptr, h_col_ind, h_adj_list, h_offset, num_nodes);
     
     
     return 0;

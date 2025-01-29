@@ -17,7 +17,7 @@ __global__ void kCore(int *adj_list, int *offset, int *degrees, int k, int num_n
     }
 }
 
-void computeKCore(int *h_row_ptr, int *h_col_ind, int *h_adj_list, int *h_offset, int *h_degrees, int num_nodes, int k, bool use_csr) {
+void computeKCore(int *h_row_ptr, int *h_col_ind, int *h_adj_list, int *h_offset, int *h_degrees, int num_nodes, int k) {
     int *d_row_ptr, *d_col_ind, *d_adj_list, *d_offset, *d_degrees;
     cudaMalloc(&d_degrees, num_nodes * sizeof(int));
     cudaMemcpy(d_degrees, h_degrees, num_nodes * sizeof(int), cudaMemcpyHostToDevice);
@@ -47,7 +47,7 @@ int main() {
     int h_degrees[] = {2, 3, 2, 2, 3};    
     int h_degrees_adj[] = {2, 3, 2, 2, 3};
     
-    computeKCore(h_row_ptr, h_col_ind, h_adj_list, h_offset, h_degrees_adj, num_nodes, k, false);
+    computeKCore(h_row_ptr, h_col_ind, h_adj_list, h_offset, h_degrees_adj, num_nodes, k);
     for (int i = 0; i < num_nodes; i++) {
         printf("Node %d -> Degree %d\n", i, h_degrees_adj[i]);
     }

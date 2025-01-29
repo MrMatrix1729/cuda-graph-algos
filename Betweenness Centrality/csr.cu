@@ -20,7 +20,7 @@ __global__ void betweennessCentrality(int *row_ptr, int *col_ind, float *bc, int
 }
 
 
-void computeBetweennessCentrality(int *h_row_ptr, int *h_col_ind, int *h_adj_list, int *h_offset, float *h_bc, int num_nodes, bool use_csr) {
+void computeBetweennessCentrality(int *h_row_ptr, int *h_col_ind, int *h_adj_list, int *h_offset, float *h_bc, int num_nodes) {
     int *d_row_ptr, *d_col_ind, *d_adj_list, *d_offset;
     float *d_bc;
     cudaMalloc(&d_bc, num_nodes * sizeof(float));
@@ -50,7 +50,7 @@ int main() {
     int h_offset[] = {0, 2, 5, 7, 9, 10};
     float h_bc[5] = {0};
     
-    computeBetweennessCentrality(h_row_ptr, h_col_ind, h_adj_list, h_offset, h_bc, num_nodes, true);
+    computeBetweennessCentrality(h_row_ptr, h_col_ind, h_adj_list, h_offset, h_bc, num_nodes);
     for (int i = 0; i < num_nodes; i++) {
         printf("Node %d -> Betweenness Centrality %f\n", i, h_bc[i]);
     }

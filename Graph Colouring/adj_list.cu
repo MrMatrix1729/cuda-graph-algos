@@ -29,7 +29,7 @@ __global__ void colorGraph(int *adj_list, int *offset, int *colors, int num_node
     }
 }
 
-void graphColoring(int *h_row_ptr, int *h_col_ind, int *h_adj_list, int *h_offset, int *h_colors, int num_nodes, bool use_csr) {
+void graphColoring(int *h_row_ptr, int *h_col_ind, int *h_adj_list, int *h_offset, int *h_colors, int num_nodes) {
     int *d_row_ptr, *d_col_ind, *d_adj_list, *d_offset, *d_colors;
     cudaMalloc(&d_colors, num_nodes * sizeof(int));
     cudaMemcpy(d_colors, h_colors, num_nodes * sizeof(int), cudaMemcpyHostToDevice);
@@ -59,7 +59,7 @@ int main() {
     
     for (int i = 0; i < num_nodes; i++) h_colors[i] = -1;
     
-    graphColoring(h_row_ptr, h_col_ind, h_adj_list, h_offset, h_colors, num_nodes, false);
+    graphColoring(h_row_ptr, h_col_ind, h_adj_list, h_offset, h_colors, num_nodes);
     for (int i = 0; i < num_nodes; i++) {
         printf("Node %d -> Color %d\n", i, h_colors[i]);
     }
